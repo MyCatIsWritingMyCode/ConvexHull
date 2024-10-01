@@ -3,10 +3,44 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:ConvexHull"
+        xmlns:local="clr-namespace:ConvexHull.ViewModels"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="QuickHull Solver" Height="450" Width="800">
+    <Window.DataContext>
+        <local:QuickHullViewModel/>
+    </Window.DataContext>
     <Grid>
+        <StackPanel Orientation="Vertical">
+            <Canvas Name="canvas" Height="336" Width="696" Background="White">
+                <ItemsControl ItemsSource="{Binding Points}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Ellipse Width="5" Height="5" Fill="Black"
+                         Canvas.Left="{Binding X}" 
+                         Canvas.Top="{Binding Y}"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
 
+                <ItemsControl ItemsSource="{Binding ConvexHullPoints}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Ellipse Width="5" Height="5" Fill="Red"
+                         Canvas.Left="{Binding X}" 
+                         Canvas.Top="{Binding Y}"/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Canvas>
+
+            <TextBlock Text="{Binding ElapsedTime}" FontSize="16" HorizontalAlignment="Center" Margin="10"/>
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+                <Button Content="Generate Points" Command="{Binding GeneratePointsCommand}" Width="120" Margin="5"/>
+                <Button Content="Solve QuickHull" Command="{Binding SolveQuickHullCommand}" Width="120" Margin="5"/>
+                <Button Content="Step QuickHull" Command="{Binding StepQuickHullCommand}" Width="120" Margin="5"/>
+                <Button Content="Delete All Points" Command="{Binding DeleteAllPointsCommand}" Width="120" Margin="5"/>
+            </StackPanel>
+        </StackPanel>
     </Grid>
 </Window>
